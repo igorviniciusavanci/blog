@@ -1,9 +1,13 @@
-.container{
+.container {
   display: block;
   background-color: #b2c4cd;
   border-radius: 5px;
   padding: 20px;
   margin-top: 16px;
+}
+
+.container h2 {
+  padding-bottom: 10px;
 }
 
 .icon {

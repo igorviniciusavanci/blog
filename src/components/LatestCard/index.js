@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import styles from './style.module.css';
@@ -9,6 +10,7 @@ export default function LatestCard({ publications }) {
   }
   return (
     <div className={styles.container}>
+      <h2>Latest:</h2>
       <ul>
         {publications.map((publication) => {
           const { title, metadata } = publication;
@@ -31,11 +33,13 @@ export default function LatestCard({ publications }) {
   );
 }
 
-LatestCard.defaultProps = {
-  publications: [
-    {
-      publicationDate: '01/02/2020',
-      title: 'dasdasdadsa',
-    },
-  ],
+LatestCard.propTypes = {
+  publications: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      metadata: PropTypes.shape({
+        publishedAt: PropTypes.number.isRequired,
+      }).isRequired,
+    }).isRequired
+  ).isRequired,
 };

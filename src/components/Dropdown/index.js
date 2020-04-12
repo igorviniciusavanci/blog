@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import PropTypes from 'prop-types';
 import styles from './styles.module.css';
 
 export default function Dropdown({ onChange }) {
@@ -21,3 +21,11 @@ export default function Dropdown({ onChange }) {
     </select>
   );
 }
+
+Dropdown.defaultProps = {
+  onChange: () => {},
+};
+
+Dropdown.propTypes = {
+  onChange: PropTypes.func,
+};
