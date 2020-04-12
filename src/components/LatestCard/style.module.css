@@ -1,4 +1,5 @@
 .container{
+  display: block;
   background-color: #b2c4cd;
   border-radius: 5px;
   padding: 20px;
@@ -39,8 +40,4 @@
 a {
   text-decoration: none;
   color: #474747;
-}
-
-li {
-  display: inline-block;
 }

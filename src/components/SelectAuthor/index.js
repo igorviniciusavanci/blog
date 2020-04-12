@@ -4,17 +4,25 @@ import styles from './style.module.css';
 
 function AuthorItem({ name, selected, onchange }) {
   return (
-    <li
-      className={selected ? styles.authorItemSelected : styles.authorItem}
-      onClick={() => selected || onchange(selected)}
-    >
-      <div
-        className={selected ? styles.cancelIconContainer : styles.iconHide}
-        onClick={() => onchange(selected)}
-      >
-        <span className={styles.removeIcon} />
+    <li>
+      <div className={styles.authorItem}>
+        <button
+          type="button"
+          className={selected ? styles.cancelButton : styles.cancelButtonHide}
+          onClick={() => onchange(selected)}
+        >
+          <span className={styles.cancelIcon} />
+        </button>
+        <button
+          type="button"
+          className={
+            selected ? styles.authorButtonSelected : styles.authorButton
+          }
+          onClick={() => selected || onchange(selected)}
+        >
+          {name}
+        </button>
       </div>
-      <p className={styles.authorName}>{name}</p>
     </li>
   );
 }
@@ -37,8 +45,8 @@ export default function SelectAuthor({ authors, onSelect }) {
 
   return (
     <div className={styles.container}>
-      <h1>Our authors:</h1>
-      <ul className={styles.authosContainer}>
+      <h2>Our authors:</h2>
+      <ul className={styles.authorsContainer}>
         {authors.map((author) => {
           const selected = authorsSelected.includes(author.id);
           return (

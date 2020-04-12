@@ -10,9 +10,11 @@ import Dropdown from '../../components/Dropdown';
 import styles from './style.module.css';
 
 export default function Home() {
+  const [fetchedPublications, setFetchedPublications] = useState([]);
+  const [fetchedAuthors, setFetchedAuthors] = useState([]);
   const [publications, setPublications] = useState([]);
-  const [authors, setAuthors] = useState([]);
-  const [filteredPublications, setFilteredPublications] = useState([]);
+  const [latestPublications, setLatestPublications] = useState([]);
+  const [order, setOrder] = useState('asc');
 
   useEffect(() => {
     async function fetchData() {
@@ -21,9 +23,8 @@ export default function Home() {
           api.get('/5be5e3fa2f000082000fc3f8'),
           api.get('/5be5e3ae2f00005b000fc3f6'),
         ]);
-        setAuthors(responseAuthors.data);
-        setFilteredPublications(responsePublications.data);
-        setPublications(responsePublications.data);
+        setFetchedAuthors(responseAuthors.data);
+        setFetchedPublications(responsePublications.data);
       } catch (error) {
         errorHandle(error);
       }
@@ -31,19 +32,30 @@ export default function Home() {
     fetchData();
   }, []);
 
-  function filterPublications(authorsSelected) {
-    if (authorsSelected.length === 0) {
-      setFilteredPublications(publications);
-    } else {
-      const filtered = publications.filter((publication) => {
-        return authorsSelected.includes(publication.metadata.authorId);
-      });
-      setFilteredPublications(filtered);
-    }
+  useEffect(() => {
+    console.log(fetchedPublications);
+    setPublications(orderByDate(fetchedPublications, order));
+    setLatestPublications(getLatestPublications());
+  }, [fetchedPublications]);
+
+  function getLatestPublications() {
+    const orderedPublications = orderByDate(fetchedPublications, 'desc');
+    const firstTreePublications = orderedPublications.slice(0, 3);
+    return firstTreePublications;
   }
 
-  function orderByDate(sortType) {
-    const copyArray = filteredPublications.slice();
+  function filterPublicationsByAutrhor(authors) {
+    if (authors.length === 0) {
+      return orderByDate(fetchedPublications, order);
+    }
+    const filteredPublications = fetchedPublications.filter((publication) => {
+      return authors.includes(publication.metadata.authorId);
+    });
+    return filteredPublications;
+  }
+
+  function orderByDate(list, sortType) {
+    const copyArray = list.slice();
     copyArray.sort((a, b) => {
       const isReversed = sortType === 'asc' ? 1 : -1;
       return (
@@ -51,39 +63,43 @@ export default function Home() {
         isReversed * -1 * b.metadata.publishedAt
       );
     });
-    setFilteredPublications(copyArray);
+    return copyArray;
   }
 
   function getAuthorNameById(id) {
-    const foundAuthor = authors.find((author) => author.id === id);
+    const foundAuthor = fetchedAuthors.find((author) => author.id === id);
     return foundAuthor.name;
   }
 
   function handleDropdownChange(value) {
-    orderByDate(value);
+    setOrder(value);
+    const orderedPublications = orderByDate(publications, value);
+    setPublications(orderedPublications);
+  }
+
+  function handleAuthorSelect(authors) {
+    const filteredPublications = filterPublicationsByAutrhor(authors);
+    setPublications(filteredPublications);
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.authorContainer}>
-        <SelectAuthor
-          authors={authors}
-          onSelect={(list) => filterPublications(list)}
-        />
+        <SelectAuthor authors={fetchedAuthors} onSelect={handleAuthorSelect} />
         <Dropdown onChange={handleDropdownChange} />
       </div>
       <div className={styles.latestContainer}>
-        <LatestCard publications={publications} />
+        <LatestCard publications={latestPublications} />
       </div>
       <div className={styles.postsContainer}>
         <ul className={styles.posts}>
-          {filteredPublications.map((publication) => {
+          {publications.map((publication) => {
             const { title, body, metadata } = publication;
             return (
               <Card
                 key={title}
                 title={title}
-                content={body}
+                text={body}
                 author={getAuthorNameById(metadata.authorId)}
                 publicationDate={metadata.publishedAt}
               />
