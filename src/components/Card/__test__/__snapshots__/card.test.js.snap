@@ -2,40 +2,35 @@
 
 exports[`matches snapshot 1`] = `
 <li
-  className="cardsItem"
+  className="item"
   data-testid="card"
 >
   <div
-    className="card"
+    className="container"
   >
     <div
-      className="card_content"
+      className="content"
     >
-      <h1
-        className="card_title"
+      <h3
+        className="title"
       >
-        test
-      </h1>
+        Don't worry
+      </h3>
       <p
-        className="card_text"
+        className="text"
       >
-        tesssssst
+        Every little thing gonna be all right
       </p>
       <p
         className="author"
       >
-        Igor
+        Bob
       </p>
       <p
         className="date"
       >
         Apr 12, 2017
       </p>
-      <button
-        className="btn"
-      >
-        Read More
-      </button>
     </div>
   </div>
 </li>

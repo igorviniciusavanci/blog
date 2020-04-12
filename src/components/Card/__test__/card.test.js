@@ -7,15 +7,23 @@ import renderer from 'react-test-renderer';
 
 import Card from '..';
 
+const CONSTANTS = {
+  key: 1,
+  title: "Don't worry",
+  content: 'Every little thing gonna be all right',
+  author: 'Bob',
+  timestamp: 1492004832000,
+};
+
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
     <Card
-      key="1"
-      title="test"
-      content="tesssssst"
-      author="Igor"
-      publicationDate={1492004832000}
+      key={CONSTANTS.key}
+      title={CONSTANTS.title}
+      text={CONSTANTS.content}
+      author={CONSTANTS.author}
+      publicationDate={CONSTANTS.timestamp}
     />,
     div
   );
@@ -24,17 +32,17 @@ it('renders without crashing', () => {
 it('render card correctly', () => {
   const { getByTestId } = render(
     <Card
-      key="1"
-      title="test"
-      content="tesssssst"
-      author="Igor"
-      publicationDate={1492004832000}
+      key={CONSTANTS.key}
+      title={CONSTANTS.title}
+      text={CONSTANTS.content}
+      author={CONSTANTS.author}
+      publicationDate={CONSTANTS.timestamp}
     />
   );
-  expect(getByTestId('card')).toHaveTextContent('test');
-  expect(getByTestId('card')).toHaveTextContent('tesssssst');
+  expect(getByTestId('card')).toHaveTextContent(CONSTANTS.title);
+  expect(getByTestId('card')).toHaveTextContent(CONSTANTS.content);
   expect(getByTestId('card')).toHaveTextContent(
-    moment(1492004832000).format('MMM DD, YYYY')
+    moment(CONSTANTS.timestamp).format('MMM DD, YYYY')
   );
 });
 
@@ -42,11 +50,11 @@ it('matches snapshot', () => {
   const tree = renderer
     .create(
       <Card
-        key="1"
-        title="test"
-        content="tesssssst"
-        author="Igor"
-        publicationDate={1492004832000}
+        key={CONSTANTS.key}
+        title={CONSTANTS.title}
+        text={CONSTANTS.content}
+        author={CONSTANTS.author}
+        publicationDate={CONSTANTS.timestamp}
       />
     )
     .toJSON();
