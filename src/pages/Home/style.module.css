@@ -1,0 +1,31 @@
+.container {
+  background-color: whitesmoke;
+  display: block;
+  max-width: 100%;
+}
+
+.authorContainer{
+  background-color: #ffffff;
+  min-width: 30em;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.postsContainer{
+  position: relative;
+  float: left;
+  width: 70%;
+}
+
+.latestContainer{
+  position: relative;
+  float: right;
+  width: 30%;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}

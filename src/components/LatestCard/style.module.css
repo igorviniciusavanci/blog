@@ -1,0 +1,46 @@
+.container{
+  background-color: #b2c4cd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color:rgb(69, 76, 80);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.latest {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+
+.content {
+  flex: 1;
+}
+
+.icon p {
+  font-weight: 600;
+  color: #b4b4b4;
+}
+
+.content p {
+  color: #7f7f7f;
+  font-size: 13px;
+}
+
+a {
+  text-decoration: none;
+  color: #474747;
+}
+
+li {
+  display: inline-block;
+}
