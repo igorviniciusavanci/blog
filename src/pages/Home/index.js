@@ -40,8 +40,8 @@ export default function Home() {
 
   function getLatestPublications() {
     const orderedPublications = orderByDate(fetchedPublications, 'desc');
-    const firstTreePublications = orderedPublications.slice(0, 3);
-    return firstTreePublications;
+    const firstThreePublications = orderedPublications.slice(0, 3);
+    return firstThreePublications;
   }
 
   function filterPublicationsByAutrhor(authors) {
